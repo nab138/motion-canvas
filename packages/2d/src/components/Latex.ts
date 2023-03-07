@@ -14,7 +14,7 @@ import {
 import {OptionList} from 'mathjax-full/js/util/Options';
 import {useLogger} from '@motion-canvas/core/lib/utils';
 import {Shape, ShapeProps} from './Shape';
-import {Rect, SerializedVector2} from '@motion-canvas/core/lib/types';
+import {BBox, SerializedVector2} from '@motion-canvas/core/lib/types';
 import {Length} from '../partials';
 import {clampRemap, map, tween} from '@motion-canvas/core/lib/tweening';
 import diffSequence from 'diff-sequences';
@@ -72,7 +72,7 @@ export interface LatexProps extends ShapeProps {
 
 export class Latex extends Shape {
   private static mathJaxCharacterWidth = createComputed(() => {
-    const svg = adaptor.innerHTML(jaxDocument.convert('X'));
+    const svg = Adaptor.innerHTML(JaxDocument.convert('X'));
     const container = document.createElement('div');
     container.innerHTML = svg;
     const viewBox = container.querySelector('svg')!.viewBox;
@@ -145,7 +145,7 @@ export class Latex extends Shape {
     const src = `${tex}::${JSON.stringify(this.options())}`;
     if (Latex.graphicContentsPool[src]) return Latex.graphicContentsPool[src];
 
-    const svgStr = adaptor.innerHTML(jaxDocument.convert(tex, this.options));
+    const svgStr = Adaptor.innerHTML(JaxDocument.convert(tex, this.options));
 
     const container = document.createElement('div');
     container.innerHTML = svgStr;
@@ -220,7 +220,7 @@ export class Latex extends Shape {
   }
 
   protected override draw(context: CanvasRenderingContext2D): void {
-    const rect = Rect.fromSizeCentered(this.size());
+    const rect = BBox.fromSizeCentered(this.size());
 
     const progress = this.texProgress();
     const scaleFactor = this.scaleFactor();
