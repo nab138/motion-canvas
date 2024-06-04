@@ -1,8 +1,11 @@
 node_modules
 
 /packages/*/dist
+!/packages/2d/dist
 /packages/*/editor
+!/packages/2d/editor
 /packages/*/lib
+!/packages/2d/lib
 /packages/*/static
 /packages/*/build
 /packages/*/output
